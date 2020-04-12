@@ -1,5 +1,8 @@
-package com.trackingapp.data.model;
+package com.trackingapp.data.entities;
 
+/**
+ * @author Juan Camilo Velandia Botello
+ */
 public class User {
 
     private String userId;
@@ -11,8 +14,9 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String full_name, String email, String username, String password) {
+    public User(String full_name, String email, String username, String password) {
         this.userId = userId;
+        this.email = email;
         this.username = username;
         this.password = password;
     }

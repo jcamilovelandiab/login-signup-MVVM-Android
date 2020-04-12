@@ -1,17 +1,17 @@
 package com.trackingapp.data.repositories;
 
-import com.trackingapp.data.datasources.DataSourceCache;
-import com.trackingapp.utils.Result;
+import com.trackingapp.data.localstorage.DataSourceCache;
+import com.trackingapp.data.entities.User;
 import com.trackingapp.data.model.LoggedInUser;
+import com.trackingapp.utils.Result;
 
 /**
  * Class that requests authentication and user information from the remote data source and
  * maintains an in-memory cache of login status and user credentials information.
  */
-public class LoginRepository {
+public class UserRepository {
 
-    private static volatile LoginRepository instance;
-
+    private static volatile UserRepository instance;
     private DataSourceCache dataSource;
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
@@ -19,13 +19,13 @@ public class LoginRepository {
     private LoggedInUser user = null;
 
     // private constructor : singleton access
-    private LoginRepository(DataSourceCache dataSource) {
+    private UserRepository(DataSourceCache dataSource) {
         this.dataSource = dataSource;
     }
 
-    public static LoginRepository getInstance(DataSourceCache dataSource) {
+    public static UserRepository getInstance(DataSourceCache dataSource) {
         if (instance == null) {
-            instance = new LoginRepository(dataSource);
+            instance = new UserRepository(dataSource);
         }
         return instance;
     }
@@ -53,4 +53,10 @@ public class LoginRepository {
         }
         return result;
     }
+
+    public Result<LoggedInUser> signup(User user){
+        Result<LoggedInUser> result = dataSource.signUp(user);
+        return result;
+    }
+
 }

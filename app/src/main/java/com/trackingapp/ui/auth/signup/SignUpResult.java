@@ -1,4 +1,4 @@
-package com.trackingapp.ui.signup;
+package com.trackingapp.ui.auth.signup;
 
 import androidx.annotation.Nullable;
 

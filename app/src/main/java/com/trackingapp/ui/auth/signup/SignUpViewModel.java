@@ -1,16 +1,21 @@
-package com.trackingapp.ui.signup;
+package com.trackingapp.ui.auth.signup;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.trackingapp.R;
+import com.trackingapp.data.repositories.UserRepository;
 import com.trackingapp.utils.Validator;
 
 public class SignUpViewModel extends ViewModel {
 
     private MutableLiveData<SignUpFormState> signUpFormState = new MutableLiveData<>();
     private MutableLiveData<SignUpResult> signUpResult = new MutableLiveData<>();
+    private UserRepository userRepository;
+
+    public SignUpViewModel(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public LiveData<SignUpFormState> getSignUpFormState() {
         return signUpFormState;

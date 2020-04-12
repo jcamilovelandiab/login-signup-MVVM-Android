@@ -1,4 +1,4 @@
-package com.trackingapp.ui.login;
+package com.trackingapp.ui.auth.login;
 
 import android.app.Activity;
 
@@ -24,9 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.trackingapp.R;
-import com.trackingapp.ui.BaseViewModelFactory;
 import com.trackingapp.ui.main.MainActivity;
-import com.trackingapp.ui.signup.SignUpActivity;
+import com.trackingapp.ui.auth.signup.SignUpActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginViewModel = ViewModelProviders.of(this, new BaseViewModelFactory())
+        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
         connectViewWithModel();

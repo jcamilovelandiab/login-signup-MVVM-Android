@@ -1,4 +1,4 @@
-package com.trackingapp.ui.signup;
+package com.trackingapp.ui.auth.signup;
 
 import androidx.annotation.Nullable;
 
@@ -17,7 +17,6 @@ class SignUpFormState {
     private Integer passwordError;
     @Nullable
     private Integer confirm_passwordError;
-
     private boolean isDataValid;
 
     SignUpFormState(@Nullable Integer full_nameError,

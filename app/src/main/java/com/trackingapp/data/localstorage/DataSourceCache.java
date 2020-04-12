@@ -1,8 +1,8 @@
-package com.trackingapp.data.datasources;
+package com.trackingapp.data.localstorage;
 
+import com.trackingapp.data.entities.User;
 import com.trackingapp.utils.Result;
 import com.trackingapp.data.model.LoggedInUser;
-import com.trackingapp.data.model.User;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,13 +28,14 @@ public class DataSourceCache {
         }
     }
 
-    public Result<String> signUp(User user){
+    public Result<LoggedInUser> signUp(User user){
         if(users.containsKey(user.getEmail())){
             return new Result.Error(new IOException("Email has been already taken!"));
         }
         user.setUserId(java.util.UUID.randomUUID().toString());
         users.put(user.getEmail(), user);
-        return new Result.Success<>("Signed up successfully!");
+        LoggedInUser loggedInUser = new LoggedInUser(user.getEmail(), user.getPassword());
+        return new Result.Success<>(loggedInUser);
     }
 
     public void logout() {
