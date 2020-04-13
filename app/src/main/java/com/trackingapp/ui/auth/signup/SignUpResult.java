@@ -2,6 +2,9 @@ package com.trackingapp.ui.auth.signup;
 
 import androidx.annotation.Nullable;
 
+import com.trackingapp.data.model.LoggedInUser;
+import com.trackingapp.ui.auth.login.LoggedInUserView;
+
 
 /**
  * This class was made to track the outcome of the registration
@@ -9,12 +12,12 @@ import androidx.annotation.Nullable;
 public class SignUpResult {
 
     @Nullable
-    private String success;
+    private LoggedInUserView success;
 
     @Nullable
     private Integer error;
 
-    public SignUpResult(@Nullable String success) {
+    public SignUpResult(@Nullable LoggedInUserView success) {
         this.success = success;
     }
 
@@ -23,11 +26,11 @@ public class SignUpResult {
     }
 
     @Nullable
-    public String getSuccess() {
+    public LoggedInUserView getSuccess() {
         return success;
     }
 
-    public void setSuccess(@Nullable String success) {
+    public void setSuccess(@Nullable LoggedInUserView success) {
         this.success = success;
     }
 

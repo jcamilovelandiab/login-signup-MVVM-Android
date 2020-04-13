@@ -14,13 +14,13 @@
 
     <string name="welcome">"Welcome !"</string>
     <!-- Strings related to errors -->
-    <string name="invalid_name">Not a valid name</string>
+    <string name="invalid_name">Not a valid full name</string>
     <string name="invalid_email">Not a valid email</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="invalid_confirmation_password">Passwords don\'t match</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="sign_up_failed">Sign up failed</string>
     <string name="server_error_message">Error connecting to the server. Please try again</string>
-
 
     <!-- Strings related to title activies -->
     <string name="title_activity_home">HomeActivity</string>

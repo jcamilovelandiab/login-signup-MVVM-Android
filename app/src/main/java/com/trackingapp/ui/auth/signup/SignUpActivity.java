@@ -1,8 +1,14 @@
 package com.trackingapp.ui.auth.signup;
 
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,8 +19,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.trackingapp.R;
+import com.trackingapp.ui.auth.login.LoggedInUserView;
+import com.trackingapp.ui.main.MainActivity;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -32,6 +41,8 @@ public class SignUpActivity extends AppCompatActivity {
         configureTextWatchers();
         configureLoginButton();
         configureSignUpButton();
+        configureSignUpFormStateObserver();
+        configureSignUpResultObserver();
     }
 
     private void connectViewWithModel(){
@@ -42,6 +53,75 @@ public class SignUpActivity extends AppCompatActivity {
         et_password = findViewById(R.id.signup_et_password);
         et_confirm_password = findViewById(R.id.signup_et_confirm_password);
         pg_loading = findViewById(R.id.signup_pg_loading);
+    }
+
+    private void configureSignUpFormStateObserver(){
+        signUpViewModel.getSignUpFormState().observe(this, new Observer<SignUpFormState>() {
+
+            @Override
+            public void onChanged(SignUpFormState signUpFormState) {
+                if(signUpFormState == null) return;
+                btn_sign_up.setEnabled(signUpFormState.isDataValid());
+
+                if(signUpFormState.getFull_nameError()!=null){
+                    et_full_name.setError(getString(signUpFormState.getFull_nameError()));
+                }else if(!et_full_name.getText().toString().equals("")){
+                    addGreenCheckIcon(et_full_name);
+                }
+
+                if(signUpFormState.getEmailError()!=null){
+                    et_email.setError(getString(signUpFormState.getEmailError()));
+                }else if(!et_email.getText().toString().equals("")){
+                    addGreenCheckIcon(et_email);
+                }
+
+                if(signUpFormState.getPasswordError()!=null){
+                    et_password.setError(getString(signUpFormState.getPasswordError()));
+                }else if(!et_password.getText().toString().equals("")){
+                    addGreenCheckIcon(et_password);
+                }
+
+                if(signUpFormState.getConfirm_passwordError()!=null){
+                    et_confirm_password.setError(getString(signUpFormState.getConfirm_passwordError()));
+                }else if(!et_confirm_password.getText().toString().equals("")){
+                    addGreenCheckIcon(et_confirm_password);
+                }
+            }
+        });
+    }
+
+    private void configureSignUpResultObserver(){
+        signUpViewModel.getSignUpResult().observe(this, new Observer<SignUpResult>() {
+            @Override
+            public void onChanged(SignUpResult signUpResult) {
+                if(signUpResult==null) return;
+                pg_loading.setVisibility(View.GONE);
+                if(signUpResult.getError()!=null){
+                    showSignUpFailed(signUpResult.getError());
+                }
+                if(signUpResult.getSuccess()!=null){
+                    updateUiWithUser(signUpResult.getSuccess());
+                    setResult(Activity.RESULT_OK);
+                    //Complete and destroy login activity once successful
+                    finish();
+                }
+            }
+        });
+    }
+
+    private void showSignUpFailed(@StringRes final Integer errorString){
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Toast toast = Toast.makeText(SignUpActivity.this, errorString, Toast.LENGTH_SHORT);
+                View view = toast.getView();
+                //Gets the actual oval background of the Toast then sets the colour filter
+                view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                //Gets the TextView from the Toast so it can be edited
+                TextView text = view.findViewById(android.R.id.message);
+                text.setTextColor(Color.WHITE);
+                toast.show();
+            }
+        });
     }
 
     private void configureTextWatchers() {
@@ -57,10 +137,10 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 signUpViewModel.signUpDataChanged(
-                        et_full_name.getText().toString(),
-                        et_email.getText().toString(),
-                        et_password.getText().toString(),
-                        et_confirm_password.getText().toString()
+                        et_full_name.getText().toString()+"",
+                        et_email.getText().toString()+"",
+                        et_password.getText().toString()+"",
+                        et_confirm_password.getText().toString()+""
                         );
             }
         };
@@ -73,10 +153,10 @@ public class SignUpActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     signUpViewModel.signUpDataChanged(
-                            et_full_name.getText().toString(),
-                            et_email.getText().toString(),
-                            et_password.getText().toString(),
-                            et_confirm_password.getText().toString()
+                            et_full_name.getText().toString()+"",
+                            et_email.getText().toString()+"",
+                            et_password.getText().toString()+"",
+                            et_confirm_password.getText().toString()+""
                     );
                 }
                 return false;
@@ -97,9 +177,25 @@ public class SignUpActivity extends AppCompatActivity {
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                pg_loading.setVisibility(View.VISIBLE);
+                signUpViewModel.signup(et_full_name.getText().toString()+"",
+                        et_email.getText().toString()+"",
+                        et_password.getText().toString()+"");
             }
         });
+    }
+
+    private void updateUiWithUser(LoggedInUserView model) {
+        String welcome = getString(R.string.welcome) + model.getDisplayName();
+        // TODO : initiate successful logged in experience
+        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void addGreenCheckIcon(final EditText editText){
+        editText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+        editText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_circle_green_24dp, 0);
     }
 
 }

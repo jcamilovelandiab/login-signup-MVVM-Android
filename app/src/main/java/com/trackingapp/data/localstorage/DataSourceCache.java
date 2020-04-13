@@ -13,13 +13,21 @@ import java.util.Map;
  */
 public class DataSourceCache {
 
-    Map<String, User> users = new HashMap<>();
+    Map<String, User> users;
+
+    public DataSourceCache(){
+        users = new HashMap<>();
+        User user = new User("juan camilo","camilo@mail.com", "camilo123");
+        users.put(user.getEmail(), user);
+    }
 
     public Result<LoggedInUser> login(String email, String password) {
         try {
             // TODO: handle loggedInUser authentication
             if(users.containsKey(email) && users.get(email).getPassword().equals(password)){
-                LoggedInUser loggedInUser = new LoggedInUser(users.get(email).getUserId(), email);
+                User user = users.get(email);
+                String first_name = user.getFull_name().split("")[0];
+                LoggedInUser loggedInUser = new LoggedInUser(user.getUserId(), first_name);
                 return new Result.Success<>(loggedInUser);
             }
             return new Result.Error(new IOException("Invalid login"));

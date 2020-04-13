@@ -56,6 +56,9 @@ public class UserRepository {
 
     public Result<LoggedInUser> signup(User user){
         Result<LoggedInUser> result = dataSource.signUp(user);
+        if(result instanceof Result.Success){
+            setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
+        }
         return result;
     }
 

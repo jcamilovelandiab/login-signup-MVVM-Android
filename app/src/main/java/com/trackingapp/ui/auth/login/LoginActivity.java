@@ -6,6 +6,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -67,12 +69,23 @@ public class LoginActivity extends AppCompatActivity {
                 loginButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
                     usernameEditText.setError(getString(loginFormState.getUsernameError()));
+                }else if(!usernameEditText.getText().toString().equals("")){
+                    addGreenCheckIcon(usernameEditText);
                 }
+
                 if (loginFormState.getPasswordError() != null) {
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
+                }else if(!passwordEditText.getText().toString().equals("")){
+                    addGreenCheckIcon(passwordEditText);
                 }
+
             }
         });
+    }
+
+    private void addGreenCheckIcon(final EditText editText){
+        editText.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+        editText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_check_circle_green_24dp, 0);
     }
 
     private void configureLoginResultObserver(){
@@ -88,10 +101,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
+                    setResult(Activity.RESULT_OK);
+                    //Complete and destroy login activity once successful
+                    finish();
                 }
-                setResult(Activity.RESULT_OK);
-                //Complete and destroy login activity once successful
-                finish();
             }
         });
     }
@@ -157,7 +170,19 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    private void showLoginFailed(@StringRes final Integer errorString) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast toast = Toast.makeText(LoginActivity.this, errorString, Toast.LENGTH_SHORT);
+                    View view = toast.getView();
+                    //Gets the actual oval background of the Toast then sets the colour filter
+                    view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                    //Gets the TextView from the Toast so it can be edited
+                    TextView text = view.findViewById(android.R.id.message);
+                    text.setTextColor(Color.WHITE);
+                    toast.show();
+                }
+            });
+
     }
 }
