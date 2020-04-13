@@ -8,4 +8,5 @@ public class LoginWrapper {
         this.email = email;
         this.password = password;
     }
+
 }

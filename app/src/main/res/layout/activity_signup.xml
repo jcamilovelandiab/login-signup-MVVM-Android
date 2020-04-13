@@ -16,6 +16,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:paddingTop="56dp"
         android:paddingLeft="40dp"
         android:paddingRight="40dp">
@@ -23,6 +24,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:startIconContentDescription="Full name"
             android:layout_margin="10dp">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -76,6 +78,7 @@
                 android:imeActionLabel="@string/action_sign_up_short"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
+                app:endIconMode="password_toggle"
                 android:selectAllOnFocus="true"/>
 
         </com.google.android.material.textfield.TextInputLayout>

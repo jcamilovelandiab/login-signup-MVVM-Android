@@ -39,4 +39,5 @@ public class SignUpResult {
     public void setError(@Nullable Integer error) {
         this.error = error;
     }
+
 }

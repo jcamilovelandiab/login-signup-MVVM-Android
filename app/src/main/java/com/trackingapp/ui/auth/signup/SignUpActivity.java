@@ -31,6 +31,7 @@ public class SignUpActivity extends AppCompatActivity {
         connectViewWithModel();
         configureTextWatchers();
         configureLoginButton();
+        configureSignUpButton();
     }
 
     private void connectViewWithModel(){
@@ -92,6 +93,13 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    private void configureSignUpButton(){
+        btn_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+    }
 
 }
