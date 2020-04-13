@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.trackingapp.R;
+import com.trackingapp.ui.auth.ViewModelFactory;
 import com.trackingapp.ui.auth.login.LoggedInUserView;
 import com.trackingapp.ui.main.MainActivity;
 
@@ -36,7 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        signUpViewModel = ViewModelProviders.of(this, new SignUpViewModelFactory()).get(SignUpViewModel.class);
+        signUpViewModel = ViewModelProviders.of(this, new ViewModelFactory()).get(SignUpViewModel.class);
         connectViewWithModel();
         configureTextWatchers();
         configureLoginButton();
