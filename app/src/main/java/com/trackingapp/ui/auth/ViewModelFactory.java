@@ -22,9 +22,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(LoginViewModel.class)) {
-            return (T) new LoginViewModel(UserRepository.getInstance(new DataSourceCache()));
+            return (T) new LoginViewModel(UserRepository.getInstance(DataSourceCache.getInstance()));
         } else if(modelClass.isAssignableFrom(SignUpViewModel.class)) {
-            return (T) new SignUpViewModel(UserRepository.getInstance(new DataSourceCache()));
+            return (T) new SignUpViewModel(UserRepository.getInstance(DataSourceCache.getInstance()));
         }else{
             throw new IllegalArgumentException("Unknown ViewModel class");
         }

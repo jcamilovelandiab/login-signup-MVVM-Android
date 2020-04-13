@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.trackingapp.R;
+import com.trackingapp.ui.auth.LoggedInUserView;
 import com.trackingapp.ui.auth.ViewModelFactory;
 import com.trackingapp.ui.main.MainActivity;
 import com.trackingapp.ui.auth.signup.SignUpActivity;

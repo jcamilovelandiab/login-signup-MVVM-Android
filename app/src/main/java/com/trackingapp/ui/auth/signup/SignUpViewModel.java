@@ -7,7 +7,7 @@ import com.trackingapp.R;
 import com.trackingapp.data.entities.User;
 import com.trackingapp.data.model.LoggedInUser;
 import com.trackingapp.data.repositories.UserRepository;
-import com.trackingapp.ui.auth.login.LoggedInUserView;
+import com.trackingapp.ui.auth.LoggedInUserView;
 import com.trackingapp.utils.Result;
 import com.trackingapp.utils.Validator;
 

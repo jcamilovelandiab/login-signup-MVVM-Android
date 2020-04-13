@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.trackingapp.data.repositories.UserRepository;
+import com.trackingapp.ui.auth.LoggedInUserView;
 import com.trackingapp.utils.Result;
 import com.trackingapp.data.model.LoggedInUser;
 import com.trackingapp.utils.Validator;

@@ -2,6 +2,8 @@ package com.trackingapp.ui.auth.login;
 
 import androidx.annotation.Nullable;
 
+import com.trackingapp.ui.auth.LoggedInUserView;
+
 /**
  * Authentication result : success (user details) or error message.
  */

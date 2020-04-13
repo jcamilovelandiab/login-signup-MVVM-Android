@@ -1,4 +1,4 @@
-package com.trackingapp.ui.auth.login;
+package com.trackingapp.ui.auth;
 
 /**
  * Class exposing authenticated user details to the UI.

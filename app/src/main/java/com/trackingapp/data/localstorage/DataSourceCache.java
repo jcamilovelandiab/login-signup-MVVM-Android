@@ -14,8 +14,16 @@ import java.util.Map;
 public class DataSourceCache {
 
     Map<String, User> users;
+    private static  DataSourceCache instance;
 
-    public DataSourceCache(){
+    public static DataSourceCache getInstance(){
+        if(instance==null){
+            instance = new DataSourceCache();
+        }
+        return instance;
+    }
+
+    private DataSourceCache(){
         users = new HashMap<>();
         User user = new User("juan camilo","camilo@mail.com", "camilo123");
         users.put(user.getEmail(), user);

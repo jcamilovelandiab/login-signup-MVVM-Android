@@ -2,8 +2,7 @@ package com.trackingapp.ui.auth.signup;
 
 import androidx.annotation.Nullable;
 
-import com.trackingapp.data.model.LoggedInUser;
-import com.trackingapp.ui.auth.login.LoggedInUserView;
+import com.trackingapp.ui.auth.LoggedInUserView;
 
 
 /**
